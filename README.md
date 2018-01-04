@@ -43,3 +43,8 @@ Then add crontab entry using `crontab -e`. Here client will execute every 30 min
 ```bash
 */30 * * * * /path/to/monitor.sh
 ```
+
+## architecture
+RPI Zero W communicate over WiFi as clients with RPI 3 as server using GRPC protocol. RPI 3 server holds GCP
+credentials to push data to a storage bucket
+![snapshotArch](https://raw.githubusercontent.com/sdeoras/home-automation/master/images/snapshot.png)
