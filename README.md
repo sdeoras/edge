@@ -2,7 +2,7 @@
 Raspberry PI based home automation stuff
 
 # snapshot
-A `grpc` based service where multiple Raspberry PI Zero W clients communicate
+Snapshot is a `grpc` based service where multiple Raspberry PI Zero W clients communicate
 with a central Raspberry PI 3 server. The central RPI 3
 server has credentials to upload data received from clients
 to the google storage bucket
