@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package snapshot;
+
+// Snapshot service is for multiple clients to stream data to a server
+service Snapshot {
+    rpc Send(stream Data) returns (Ack) {}
+}
+
+// Data consists of a tag which is used for folder name on google storage
+// and data bytes consisting of snapshot image
+message Data {
+    string tag = 1;
+    bytes data = 2;
+}
+
+// Server sends acknowledgement as number of bytes written
+message Ack {
+    int64 n = 1;
+}
