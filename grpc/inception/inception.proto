@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package inception;
+
+// Snapshot service is for multiple clients to stream data to a server
+service Inception {
+    rpc Query(stream Data) returns (Ack) {}
+}
+
+// Data consists of a tag which is used for folder name on google storage
+// and data bytes consisting of snapshot image
+message Data {
+    string tag = 1;
+    bytes data = 2;
+}
+
+// Server sends acknowledgement
+message Ack {
+    int64 n = 1;
+    string topLabel = 2;
+    repeated Label label = 3;
+}
+
+// label contains label string and a probability
+message Label {
+    string label = 1;
+    int64 probability = 2;
+}
