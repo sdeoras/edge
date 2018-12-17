@@ -1,7 +1,7 @@
 package main
 
 // #cgo LDFLAGS: -Wl,-rpath -Wl,\$ORIGIN/lib
-import "C"
+// import "C"
 
 import (
 	"bufio"
