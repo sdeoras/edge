@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package monitor;
+
+// Monitor service is for clients to request monitor data from the server.
+// Server responds by sending a streaming data.
+service Monitor {
+    rpc Query(Empty) returns (stream Data) {}
+}
+
+// Data is basically just a byte buffer.
+message Data {
+    string tag = 1;
+    bytes data = 2;
+}
+
+// Server sends acknowledgement
+message Empty {
+}

@@ -3,6 +3,7 @@ module github.com/sdeoras/home-automation
 require (
 	cloud.google.com/go v0.34.0
 	github.com/golang/protobuf v1.2.0
+	github.com/google/martian v2.1.0+incompatible // indirect
 	github.com/googleapis/gax-go v2.0.2+incompatible // indirect
 	github.com/tensorflow/tensorflow v1.12.0
 	go.opencensus.io v0.18.0 // indirect
