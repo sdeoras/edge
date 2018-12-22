@@ -1,0 +1,14 @@
+{
+  "service": {
+    "name": "monitor-rpi-2",
+    "port": 50051,
+    "connect": { "sidecar_service": {} },
+    "check": {
+        "id": "monitor-util",
+        "name": "Service health status",
+        "grpc": "127.0.0.1:50051",
+        "grpc_use_tls": false,
+        "interval": "10s"
+    }
+  }
+}
