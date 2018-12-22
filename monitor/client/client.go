@@ -26,7 +26,8 @@ const (
 )
 
 func main() {
-	server := flag.String("host", ADDR, "Host IP address")
+	server := flag.String("host", ADDR, "host IP address")
+	port := flag.String("port", PORT, "port number")
 	health := flag.Bool("health", false, "show server health")
 	flag.Parse()
 
@@ -35,7 +36,7 @@ func main() {
 	}
 
 	// Set up a connection to the server.
-	conn, err := grpc.Dial(*server+":"+PORT, grpc.WithInsecure())
+	conn, err := grpc.Dial(*server+":"+*port, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
