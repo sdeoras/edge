@@ -1,0 +1,28 @@
+{
+  "services": [
+    {
+    	"name": "socat-client-rpi-0",
+    	"port": 9180
+    },
+    {
+    	"name": "socat-client-rpi-1",
+    	"port": 9181
+    },
+    {
+    	"name": "socat-client-rpi-2",
+    	"port": 9182
+    },
+    {
+    	"name": "monitor-client-rpi-0",
+    	"port": 50050
+    },
+    {
+    	"name": "monitor-client-rpi-1",
+    	"port": 50051
+    },
+    {
+    	"name": "monitor-client-rpi-2",
+    	"port": 50052
+    }
+  ]
+}
