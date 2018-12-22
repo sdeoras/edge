@@ -25,3 +25,9 @@ Transfer the contents of `server/xy` folder to the `xy` server node. Similarly, 
 ## start clients
 `ssh` onto each of the client nodes and run bash scripts from the folder that you just copied over. Visit
 the consul up again and see that all of the services are up and running.
+
+## References:
+* https://learn.hashicorp.com/consul/getting-started/connect#starting-a-connect-unaware-service
+* https://www.youtube.com/watch?v=8T8t4-hQY74
+* https://www.youtube.com/watch?v=Eg8b8nITEk4
+* https://www.youtube.com/watch?v=KZIu33sbwQQ
