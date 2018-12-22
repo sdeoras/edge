@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"log"
 	"net"
@@ -8,17 +9,29 @@ import (
 
 	"github.com/sdeoras/home-automation/grpc/monitor"
 	"google.golang.org/grpc"
+	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/reflection"
 )
 
 //go:generate ./build.sh
 
 const (
-	ADDR = ":50051"
+	ADDR = "127.0.0.1"
+	PORT = "50051"
 )
 
 type server struct {
 	tag string
+}
+
+func (s *server) Check(ctx context.Context, req *healthpb.HealthCheckRequest) (*healthpb.HealthCheckResponse, error) {
+	response := new(healthpb.HealthCheckResponse)
+	response.Status = healthpb.HealthCheckResponse_SERVING
+	return response, nil
+}
+
+func (s *server) Watch(req *healthpb.HealthCheckRequest, ws healthpb.Health_WatchServer) error {
+	return nil
 }
 
 func (s *server) Query(_ *monitor.Empty, stream monitor.Monitor_QueryServer) error {
@@ -63,15 +76,18 @@ func getImage() ([]byte, error) {
 
 func main() {
 	tag := flag.String("tag", "rpi-zero-default", "tag string identifier")
+	addr := flag.String("host", ADDR, "address for this service")
 	flag.Parse()
 
-	lis, err := net.Listen("tcp", ADDR)
+	lis, err := net.Listen("tcp", *addr+":"+PORT)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	s := grpc.NewServer()
-	monitor.RegisterMonitorServer(s, &server{tag: *tag})
+	srv := &server{tag: *tag}
+	monitor.RegisterMonitorServer(s, srv)
+	healthpb.RegisterHealthServer(s, srv)
 	reflection.Register(s)
 	if err := s.Serve(lis); err != nil {
 		log.Fatal(err)

@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"context"
 	"flag"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -14,17 +15,19 @@ import (
 
 	"github.com/sdeoras/home-automation/grpc/monitor"
 	"google.golang.org/grpc"
+	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 )
 
 //go:generate ./build.sh
 
 const (
-	PORT  = "50051"
-	CHUNK = 0x100000
+	ADDR = "127.0.0.1"
+	PORT = "50051"
 )
 
 func main() {
-	server := flag.String("host", "", "Host IP address")
+	server := flag.String("host", ADDR, "Host IP address")
+	health := flag.Bool("health", false, "show server health")
 	flag.Parse()
 
 	if *server == "" {
@@ -39,6 +42,20 @@ func main() {
 	defer func() {
 		_ = conn.Close()
 	}()
+
+	if *health {
+		c := healthpb.NewHealthClient(conn)
+		res, err := c.Check(context.Background(), &healthpb.HealthCheckRequest{
+			Service: "check",
+		})
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Println(res.Status)
+		return
+	}
 
 	c := monitor.NewMonitorClient(conn)
 
