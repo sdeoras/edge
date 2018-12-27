@@ -11,3 +11,5 @@ require (
 	google.golang.org/api v0.0.0-20181217000635-41dc4b66e69d // indirect
 	google.golang.org/grpc v1.17.0
 )
+
+replace github.com/tensorflow/tensorflow => ../tensorflow
