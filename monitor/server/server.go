@@ -7,7 +7,7 @@ import (
 	"net"
 	"os/exec"
 
-	"github.com/sdeoras/home-automation/grpc/monitor"
+	"github.com/sdeoras/rpi-automation/grpc/monitor"
 	"google.golang.org/grpc"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/reflection"
