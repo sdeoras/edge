@@ -5,7 +5,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/sdeoras/home-automation/grpc/inception"
+	"github.com/sdeoras/rpi-automation/grpc/inception"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )

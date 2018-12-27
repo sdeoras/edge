@@ -1,4 +1,4 @@
-module github.com/sdeoras/home-automation
+module github.com/sdeoras/rpi-automation
 
 require (
 	cloud.google.com/go v0.34.0
