@@ -1,4 +1,4 @@
-# home-automation
+# edge
 Raspberry PI based home automation stuff
 
 # snapshot
@@ -10,9 +10,9 @@ to the google storage bucket
 ## installation
 ```bash
 # download code
-go get -u github.com/sdeoras/home-automation/...
-go generate github.com/sdeoras/home-automation/snapshot/client
-go generate github.com/sdeoras/home-automation/snapshot/server
+go get -u github.com/sdeoras/edge/...
+go generate github.com/sdeoras/edge/snapshot/client
+go generate github.com/sdeoras/edge/snapshot/server
 ```
 This will generate ARM-7 binary called `snapshot-server` and ARM-6 binary called
 `snapshot-client` located at $GOPATH/bin
@@ -47,4 +47,4 @@ Then add crontab entry using `crontab -e`. Here client will execute every 30 min
 ## architecture
 RPI Zero W communicate over WiFi as clients with RPI 3 as server using GRPC protocol. RPI 3 server holds GCP
 credentials to push data to a storage bucket
-![snapshotArch](https://raw.githubusercontent.com/sdeoras/home-automation/master/images/snapshot.png)
+![snapshotArch](https://raw.githubusercontent.com/sdeoras/edge/master/images/snapshot.png)
