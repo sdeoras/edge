@@ -1,4 +1,4 @@
-module github.com/sdeoras/rpi-automation
+module github.com/sdeoras/edge
 
 require (
 	cloud.google.com/go v0.34.0

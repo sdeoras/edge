@@ -13,7 +13,7 @@ import (
 	"path/filepath"
 	"sync"
 
-	"github.com/sdeoras/rpi-automation/grpc/monitor"
+	"github.com/sdeoras/edge/grpc/monitor"
 	"google.golang.org/grpc"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 )
