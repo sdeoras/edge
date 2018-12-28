@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"cloud.google.com/go/storage"
-	"github.com/sdeoras/rpi-automation/grpc/snapshot"
+	"github.com/sdeoras/edge/grpc/snapshot"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"

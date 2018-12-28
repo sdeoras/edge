@@ -7,7 +7,7 @@ import (
 	"log"
 	"os/exec"
 
-	"github.com/sdeoras/rpi-automation/grpc/snapshot"
+	"github.com/sdeoras/edge/grpc/snapshot"
 	"google.golang.org/grpc"
 )
 
