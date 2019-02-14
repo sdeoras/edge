@@ -135,7 +135,7 @@ func main() {
 	}
 
 	fmt.Println("[" + response.Label + "]")
-	if response.Label != "Closed" {
+	if response.Label == "Closed" {
 		return
 	}
 
