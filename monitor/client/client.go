@@ -9,11 +9,13 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
-	"path/filepath"
-	"sync"
 
+	"github.com/golang/protobuf/proto"
 	"github.com/sdeoras/edge/grpc/monitor"
+	"github.com/sdeoras/jwt"
+	"github.com/sdeoras/lambda/api"
 	"google.golang.org/grpc"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 )
@@ -21,8 +23,11 @@ import (
 //go:generate ./build.sh
 
 const (
-	ADDR = "127.0.0.1"
-	PORT = "50051"
+	ADDR        = "127.0.0.1"
+	PORT        = "50051"
+	ProjectName = "lambda"
+	NameInfer   = "infer"
+	NameEmail   = "email"
 )
 
 func main() {
@@ -67,8 +72,6 @@ func main() {
 
 	var bb bytes.Buffer
 	bw := bufio.NewWriter(&bb)
-	tag := "monitor.jpg"
-	once := new(sync.Once)
 
 	for {
 		data, err := stream.Recv()
@@ -79,11 +82,6 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-
-		once.Do(func() {
-			tag = filepath.Join("/tmp", data.Tag, tag)
-			_ = os.MkdirAll(filepath.Join("/tmp", data.Tag), 0755)
-		})
 
 		if nn, err := bw.Write(data.Data); err != nil {
 			log.Fatal(err)
@@ -98,7 +96,89 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if err := ioutil.WriteFile(tag, bb.Bytes(), 0644); err != nil {
+	request := &api.InferImageRequest{
+		Data:      bb.Bytes(),
+		ModelPath: "garageDoorChecker.pb",
+		LabelPath: "garageDoorChecker.txt",
+	}
+
+	b, err := proto.Marshal(request)
+	if err != nil {
 		log.Fatal(err)
+	}
+
+	jwtRequestor := jwt.NewRequestor(os.Getenv("JWT_SECRET_KEY"))
+
+	req, err := jwtRequestor.Request(http.MethodPost, "https://"+os.Getenv("GOOGLE_GCF_DOMAIN")+
+		"/"+ProjectName+"/"+NameInfer, nil, b)
+	req.Method = http.MethodPost
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+
+	b, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		log.Fatalf("%s:%s. Mesg:%s", "expected status 200 OK, got", resp.Status, string(b))
+	}
+
+	response := new(api.InferImageResponse)
+	if err := proto.Unmarshal(b, response); err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("[" + response.Label + "]")
+	if response.Label != "Closed" {
+		return
+	}
+
+	sendRequest := &api.EmailRequest{
+		FromName:  os.Getenv("EMAIL_FROM_NAME"),
+		FromEmail: os.Getenv("EMAIL_FROM_EMAIL"),
+		ToName:    os.Getenv("EMAIL_TO_NAME"),
+		ToEmail:   os.Getenv("EMAIL_TO_EMAIL"),
+		Subject:   "garage door is open",
+		Body:      []byte("<strong>garage door is open</strong>"),
+	}
+
+	b, err = proto.Marshal(sendRequest)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	req, err = jwtRequestor.Request(http.MethodPost, "https://"+os.Getenv("GOOGLE_GCF_DOMAIN")+
+		"/"+ProjectName+"/"+NameEmail, nil, b)
+	req.Method = http.MethodPost
+
+	client = &http.Client{}
+	resp, err = client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		log.Fatalf("%s:%s", "expected status 200 OK, got", resp.Status)
+	}
+
+	b, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	sendResponse := new(api.EmailResponse)
+	if err := proto.Unmarshal(b, sendResponse); err != nil {
+		log.Fatal(err)
+	}
+
+	if sendResponse.StatusCode != 202 {
+		log.Fatal("sending email failed with status code:", sendResponse.StatusCode)
 	}
 }
