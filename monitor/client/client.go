@@ -34,6 +34,7 @@ func main() {
 	server := flag.String("host", ADDR, "host IP address")
 	port := flag.String("port", PORT, "port number")
 	health := flag.Bool("health", false, "show server health")
+	skipNotification := flag.Bool("skip-notification", false, "skip user notification")
 	flag.Parse()
 
 	if *server == "" {
@@ -96,11 +97,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	request := &api.InferImageRequest{
-		Data:      bb.Bytes(),
-		ModelPath: "garageDoorChecker.pb",
-		LabelPath: "garageDoorChecker.txt",
-	}
+	request := new(api.InferImageRequest)
+	request.Images = make([]*api.Image, 1)
+	request.Images[0] = new(api.Image)
+	request.Images[0].Name = "garage"
+	request.Images[0].Data = bb.Bytes()
+	request.ModelPath = "garageDoorChecker.pb"
+	request.LabelPath = "garageDoorChecker.txt"
 
 	b, err := proto.Marshal(request)
 	if err != nil {
@@ -134,8 +137,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("[" + response.Label + "]")
-	if response.Label == "Closed" {
+	fmt.Println("[" + response.Outputs[0].Label + "]")
+	if response.Outputs[0].Label == "Closed" {
+		return
+	}
+
+	if *skipNotification {
 		return
 	}
 
@@ -181,4 +188,6 @@ func main() {
 	if sendResponse.StatusCode != 202 {
 		log.Fatal("sending email failed with status code:", sendResponse.StatusCode)
 	}
+
+	fmt.Println("sent email", sendResponse.StatusCode)
 }
