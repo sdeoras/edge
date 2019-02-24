@@ -12,6 +12,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/sirupsen/logrus"
+
 	"github.com/golang/protobuf/proto"
 	"github.com/sdeoras/edge/grpc/monitor"
 	"github.com/sdeoras/jwt"
@@ -136,12 +138,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("[" + response.Outputs[0].Label + "]")
-	if response.Outputs[0].Label == "Closed" {
+	logrus.Info(response.Outputs[0].Label)
+	if response.Outputs[0].Label == "garagedoorclosed" {
 		return
 	}
 
 	if *skipNotification {
+		logrus.Info("skipping notification")
 		return
 	}
 
