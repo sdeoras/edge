@@ -105,6 +105,7 @@ func main() {
 	request.Images[0].Name = "garage"
 	request.Images[0].Data = bb.Bytes()
 	request.ModelName = "garage-door-checker"
+	request.ModelVersion = "v1"
 
 	b, err := proto.Marshal(request)
 	if err != nil {
