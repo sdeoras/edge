@@ -102,8 +102,7 @@ func main() {
 	request.Images[0] = new(api.Image)
 	request.Images[0].Name = "garage"
 	request.Images[0].Data = bb.Bytes()
-	request.ModelPath = "garageDoorChecker.pb"
-	request.LabelPath = "garageDoorChecker.txt"
+	request.ModelName = "garage-door-checker"
 
 	b, err := proto.Marshal(request)
 	if err != nil {
