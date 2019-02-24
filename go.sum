@@ -71,8 +71,8 @@ github.com/prometheus/procfs v0.0.0-20181204211112-1dc9a6cbc91a/go.mod h1:c3At6R
 github.com/russross/blackfriday v1.5.2/go.mod h1:JO/DiYxRf+HjHt06OyowR9PTA263kcR/rfWxYHBV53g=
 github.com/sdeoras/jwt v0.0.3 h1:F8KI2eNeHKMnyAeo4tuq1p6lFQojp9bQfOZ3AX3MWs4=
 github.com/sdeoras/jwt v0.0.3/go.mod h1:TA6D4/3vOMvVSC5MWEC2ML/bNosW6gTZ5T7lVrulp1c=
-github.com/sdeoras/lambda/api v0.0.0-20190220193256-8393239bd739 h1:wIlokjSsPybHKUUaWLAjcTuWuR5gWwNyP86apZG2d1w=
-github.com/sdeoras/lambda/api v0.0.0-20190220193256-8393239bd739/go.mod h1:6oAW/wSEqaRQPWkEltrnJfSOuT70J0D6MsHEJLkOPKQ=
+github.com/sdeoras/lambda/api v0.0.0-20190224001548-9dd67f91b7a8 h1:yBdbMdVC2KyJ5gErfLqrQGYCfAWHlJ6cEX29XKlwiRw=
+github.com/sdeoras/lambda/api v0.0.0-20190224001548-9dd67f91b7a8/go.mod h1:6oAW/wSEqaRQPWkEltrnJfSOuT70J0D6MsHEJLkOPKQ=
 github.com/sergi/go-diff v1.0.0/go.mod h1:0CfEIISq7TuYL3j771MWULgwwjU+GofnZX9QAmXWZgo=
 github.com/shurcooL/component v0.0.0-20170202220835-f88ec8f54cc4/go.mod h1:XhFIlyj5a1fBNx5aJTbKoIq0mNaPvOagO+HjB3EtxrY=
 github.com/shurcooL/events v0.0.0-20181021180414-410e4ca65f48/go.mod h1:5u70Mqkb5O5cxEA8nxTsgrgLehJeAw6Oc4Ab1c/P1HM=
@@ -100,8 +100,8 @@ github.com/sourcegraph/annotate v0.0.0-20160123013949-f4cad6c6324d/go.mod h1:Udh
 github.com/sourcegraph/syntaxhighlight v0.0.0-20170531221838-bd320f5d308e/go.mod h1:HuIsMU8RRBOtsCgI77wP899iHVBQpCmg4ErYMZB+2IA=
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07/go.mod h1:kDXzergiv9cbyO7IOYJZWg1U88JhDg3PB6klq9Hg2pA=
-github.com/tensorflow/tensorflow v1.12.0 h1:fT4okrN4BkpgotWmDwS56wM6BdkRpTL0lLMzvkM+bLo=
-github.com/tensorflow/tensorflow v1.12.0/go.mod h1:itOSERT4trABok4UOoG+X4BoKds9F3rIsySdn+Lvu90=
+github.com/tensorflow/tensorflow v1.13.0 h1:ZGQE7Kbo6t1BYcuXtq0NhWC3BsCu9ke22mYF+BOZN6o=
+github.com/tensorflow/tensorflow v1.13.0/go.mod h1:itOSERT4trABok4UOoG+X4BoKds9F3rIsySdn+Lvu90=
 go.opencensus.io v0.18.0 h1:Mk5rgZcggtbvtAun5aJzAtjKKN/t0R3jJPlWILlv938=
 go.opencensus.io v0.18.0/go.mod h1:vKdFvxhtzZ9onBp9VKHK8z/sRpBMnKAsufL7wlDrCOA=
 go.opencensus.io v0.19.0 h1:+jrnNy8MR4GZXvwF9PEuSyHxA4NaTf6601oNRwCSXq0=
@@ -142,6 +142,8 @@ golang.org/x/sys v0.0.0-20181029174526-d69651ed3497/go.mod h1:STP8DvDyc/dI5b8T5h
 golang.org/x/sys v0.0.0-20181218192612-074acd46bca6/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20190220154126-629670e5acc5 h1:3Nsfe5Xa1wTt01QxlAFIY5j9ycDtS+d7mhvI8ZY5bn0=
 golang.org/x/sys v0.0.0-20190220154126-629670e5acc5/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
+golang.org/x/sys v0.0.0-20190222171317-cd391775e71e h1:oF7qaQxUH6KzFdKN4ww7NpPdo53SZi4UlcksLrb2y/o=
+golang.org/x/sys v0.0.0-20190222171317-cd391775e71e/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/text v0.3.0 h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/text v0.3.1-0.20180807135948-17ff2d5776d2 h1:z99zHgr7hKfrUcX/KsoJk5FJfjTceCKIp96+biqP4To=
