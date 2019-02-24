@@ -5,6 +5,7 @@ require (
 	github.com/golang/protobuf v1.2.0
 	github.com/sdeoras/jwt v0.0.3
 	github.com/sdeoras/lambda/api v0.0.0-20190224001548-9dd67f91b7a8
+	github.com/sirupsen/logrus v1.3.0
 	github.com/tensorflow/tensorflow v1.13.0
 	go.opencensus.io v0.19.0 // indirect
 	golang.org/x/net v0.0.0-20190213061140-3a22650c66bd
