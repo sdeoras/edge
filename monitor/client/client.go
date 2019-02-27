@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"context"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"io"
@@ -53,8 +54,13 @@ func main() {
 	}()
 
 	if *health {
+		out, err := checkHealth("infer", "email")
+		if err != nil {
+			log.Fatal(err)
+		}
+
 		c := healthpb.NewHealthClient(conn)
-		res, err := c.Check(context.Background(), &healthpb.HealthCheckRequest{
+		response, err := c.Check(context.Background(), &healthpb.HealthCheckRequest{
 			Service: "check",
 		})
 
@@ -62,7 +68,15 @@ func main() {
 			log.Fatal(err)
 		}
 
-		fmt.Println(res.Status)
+		out["server"] = response.Status.String()
+
+		jb, err := json.Marshal(out)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Println(string(jb))
+
 		return
 	}
 
@@ -116,7 +130,6 @@ func main() {
 
 	req, err := jwtRequestor.Request(http.MethodPost, "https://"+os.Getenv("GOOGLE_GCF_DOMAIN")+
 		"/"+ProjectName+"/"+NameInfer, nil, b)
-	req.Method = http.MethodPost
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
