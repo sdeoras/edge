@@ -12,6 +12,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/sirupsen/logrus"
 
@@ -36,9 +38,19 @@ const (
 func main() {
 	server := flag.String("host", ADDR, "host IP address")
 	port := flag.String("port", PORT, "port number")
-	health := flag.Bool("health", false, "show server health")
+	health := flag.Bool("health", false, "show server health and exit")
+	model := flag.String("model", "", "model/version to use")
+	expectedOut := flag.String("expect", "", "expected output label")
 	skipNotification := flag.Bool("skip-notification", false, "skip user notification")
 	flag.Parse()
+
+	modelName, modelVersion := filepath.Split(*model)
+	if modelName == "" {
+		modelName = modelVersion
+		modelVersion = "v1"
+	} else {
+		modelName = strings.TrimRight(modelName, "/")
+	}
 
 	if *server == "" {
 		log.Fatal("Please enter server IP using --host")
@@ -118,8 +130,8 @@ func main() {
 	request.Images[0] = new(api.Image)
 	request.Images[0].Name = "garage"
 	request.Images[0].Data = bb.Bytes()
-	request.ModelName = "garage-door-checker"
-	request.ModelVersion = "v1"
+	request.ModelName = modelName
+	request.ModelVersion = modelVersion
 
 	b, err := proto.Marshal(request)
 	if err != nil {
@@ -153,7 +165,7 @@ func main() {
 	}
 
 	logrus.Info(response.Outputs[0].Label)
-	if response.Outputs[0].Label == "garagedoorclosed" {
+	if response.Outputs[0].Label == *expectedOut {
 		return
 	}
 
