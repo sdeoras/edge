@@ -66,7 +66,13 @@ func (s *server) Query(_ *monitor.Empty, stream monitor.Monitor_QueryServer) err
 }
 
 func getImage() ([]byte, error) {
-	b, err := exec.Command("raspistill", "-t", "2s", "-o", "-").Output()
+	b, err := exec.Command("raspistill",
+		"-w", "299",
+		"-h", "299",
+		"-t", "10",
+		"-q", "50",
+		"-o", "-",
+	).Output()
 	if err != nil {
 		return nil, err
 	}
