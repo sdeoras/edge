@@ -39,6 +39,7 @@ func main() {
 	server := flag.String("host", ADDR, "host IP address")
 	port := flag.String("port", PORT, "port number")
 	health := flag.Bool("health", false, "show server health and exit")
+	download := flag.Bool("download", false, "download image and exit")
 	model := flag.String("model", "", "model/version to use")
 	expectedOut := flag.String("expect", "", "expected output label")
 	skipNotification := flag.Bool("skip-notification", false, "skip user notification")
@@ -123,6 +124,15 @@ func main() {
 
 	if err := bw.Flush(); err != nil {
 		log.Fatal(err)
+	}
+
+	if *download {
+		if err := ioutil.WriteFile("/tmp/monitor.jpg", bb.Bytes(), 0644); err != nil {
+			log.Fatal(err)
+		}
+
+		logrus.Info("wrote /tmp/monitor.jpg")
+		return
 	}
 
 	request := new(api.InferImageRequest)
@@ -217,5 +227,5 @@ func main() {
 		log.Fatal("sending email failed with status code:", sendResponse.StatusCode)
 	}
 
-	fmt.Println("sent email", sendResponse.StatusCode)
+	logrus.Info("sent email", sendResponse.StatusCode)
 }
