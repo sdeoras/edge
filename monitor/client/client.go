@@ -14,13 +14,10 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
 	"github.com/sirupsen/logrus"
-
 	"github.com/golang/protobuf/proto"
-	"github.com/sdeoras/edge/grpc/monitor"
+	"github.com/sdeoras/api"
 	"github.com/sdeoras/jwt"
-	"github.com/sdeoras/lambda/api"
 	"google.golang.org/grpc"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 )
@@ -93,9 +90,9 @@ func main() {
 		return
 	}
 
-	c := monitor.NewMonitorClient(conn)
+	c := api.NewMonitorClient(conn)
 
-	stream, err := c.Query(context.Background(), &monitor.Empty{})
+	stream, err := c.Query(context.Background(), &api.Empty{})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -138,7 +135,7 @@ func main() {
 	request := new(api.InferImageRequest)
 	request.Images = make([]*api.Image, 1)
 	request.Images[0] = new(api.Image)
-	request.Images[0].Name = "garage"
+	request.Images[0].Name = modelName
 	request.Images[0].Data = bb.Bytes()
 	request.ModelName = modelName
 	request.ModelVersion = modelVersion
@@ -174,7 +171,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	logrus.Info(response.Outputs[0].Label)
+	logrus.WithField("model", filepath.Join(modelName, modelVersion)).
+		Info(response.Outputs[0].Label)
 	if response.Outputs[0].Label == *expectedOut {
 		return
 	}
@@ -189,8 +187,9 @@ func main() {
 		FromEmail: os.Getenv("EMAIL_FROM_EMAIL"),
 		ToName:    os.Getenv("EMAIL_TO_NAME"),
 		ToEmail:   os.Getenv("EMAIL_TO_EMAIL"),
-		Subject:   "garage door is open",
-		Body:      []byte("<strong>garage door is open</strong>"),
+		Subject:   fmt.Sprintf("%s result is %s", modelName, response.Outputs[0].Label),
+		Body:      []byte(fmt.Sprintf("<strong>%s result is %s</strong>",
+			modelName, response.Outputs[0].Label)),
 	}
 
 	b, err = proto.Marshal(sendRequest)
