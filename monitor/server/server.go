@@ -3,11 +3,10 @@ package main
 import (
 	"context"
 	"flag"
+	"github.com/sdeoras/api"
 	"log"
 	"net"
 	"os/exec"
-
-	"github.com/sdeoras/edge/grpc/monitor"
 	"google.golang.org/grpc"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/reflection"
@@ -34,7 +33,7 @@ func (s *server) Watch(req *healthpb.HealthCheckRequest, ws healthpb.Health_Watc
 	return nil
 }
 
-func (s *server) Query(_ *monitor.Empty, stream monitor.Monitor_QueryServer) error {
+func (s *server) Query(_ *api.Empty, stream api.Monitor_QueryServer) error {
 	img, err := getImage()
 	if err != nil {
 		return err
@@ -53,7 +52,7 @@ func (s *server) Query(_ *monitor.Empty, stream monitor.Monitor_QueryServer) err
 			stop = len(img)
 		}
 
-		data := new(monitor.Data)
+		data := new(api.Data)
 		data.Data = img[start:stop]
 		data.Tag = s.tag
 		if err := stream.Send(data); err != nil {
@@ -92,7 +91,7 @@ func main() {
 
 	s := grpc.NewServer()
 	srv := &server{tag: *tag}
-	monitor.RegisterMonitorServer(s, srv)
+	api.RegisterMonitorServer(s, srv)
 	healthpb.RegisterHealthServer(s, srv)
 	reflection.Register(s)
 	if err := s.Serve(lis); err != nil {
