@@ -95,8 +95,8 @@ github.com/prometheus/procfs v0.0.0-20190117184657-bf6a532e95b1/go.mod h1:c3At6R
 github.com/russross/blackfriday v1.5.2/go.mod h1:JO/DiYxRf+HjHt06OyowR9PTA263kcR/rfWxYHBV53g=
 github.com/sdeoras/api v0.1.1 h1:MC73SOhpC8bmJqKLeflUzWLrM1QIy2FiuPL9E9/tiec=
 github.com/sdeoras/api v0.1.1/go.mod h1:0de8pg+1kQuUqwvYi1oolguvAWKCsvyKiF5quFQg5yA=
-github.com/sdeoras/health v0.1.4 h1:YHMbsI5V3ialpSveKCEU5OSalk3gte9sCu/002RFwTo=
-github.com/sdeoras/health v0.1.4/go.mod h1:/7r61G5Ddv0WnijwkFEB1xRJlPyUDFP5htuqEwQPGnE=
+github.com/sdeoras/health v0.1.5 h1:+J9YnNInWHJyPbPydbIwN2PhlSs5UIKv5++zqDfe5a8=
+github.com/sdeoras/health v0.1.5/go.mod h1:i2G4RLvYeQalJbyTDpWFc4g5t6G9pJaVKxtfJY7nyXE=
 github.com/sdeoras/jwt v0.0.4 h1:iVeaVOSLFFDjt3nJYUbcCh/NGcVr64lEi2QNta/+h8U=
 github.com/sdeoras/jwt v0.0.4/go.mod h1:TA6D4/3vOMvVSC5MWEC2ML/bNosW6gTZ5T7lVrulp1c=
 github.com/sergi/go-diff v1.0.0/go.mod h1:0CfEIISq7TuYL3j771MWULgwwjU+GofnZX9QAmXWZgo=
@@ -188,8 +188,8 @@ golang.org/x/sys v0.0.0-20181218192612-074acd46bca6/go.mod h1:STP8DvDyc/dI5b8T5h
 golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20190306220723-b294cbcfc56d h1:4Ew1XHJYjwX6RiE8SgSymqS1zCRQyGpcAnVfbpEuXfE=
 golang.org/x/sys v0.0.0-20190306220723-b294cbcfc56d/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
-golang.org/x/sys v0.0.0-20190308023053-584f3b12f43e h1:K7CV15oJ823+HLXQ+M7MSMrUg8LjfqY7O3naO+8Pp/I=
-golang.org/x/sys v0.0.0-20190308023053-584f3b12f43e/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20190309122539-980fc434d28e h1:eFmUCjqCNXZTydmJBXWeJOHCWGd2My0J+jleBc2ntI0=
+golang.org/x/sys v0.0.0-20190309122539-980fc434d28e/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/text v0.3.0 h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/text v0.3.1-0.20180807135948-17ff2d5776d2 h1:z99zHgr7hKfrUcX/KsoJk5FJfjTceCKIp96+biqP4To=
