@@ -15,7 +15,7 @@ func checkHealth(services ...string) (map[string]string, error) {
 	out := make(map[string]string)
 
 	for _, service := range services {
-		req, err := healthProvider.Request(service, "https://"+filepath.Join(
+		req, err := healthProvider.NewHTTPRequest(service, "https://"+filepath.Join(
 			os.Getenv("GOOGLE_GCF_DOMAIN"),
 			ProjectName,
 			health.StdRoute))
@@ -26,7 +26,7 @@ func checkHealth(services ...string) (map[string]string, error) {
 			return nil, err
 		}
 
-		_, mesg, err := healthProvider.Response(resp)
+		_, mesg, err := healthProvider.ReadResponseAndClose(resp)
 		if err != nil {
 			return nil, err
 		}

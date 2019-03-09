@@ -6,7 +6,7 @@ require (
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
 	github.com/sdeoras/api v0.1.1
-	github.com/sdeoras/health v0.1.4
+	github.com/sdeoras/health v0.1.5
 	github.com/sdeoras/jwt v0.0.4
 	github.com/sirupsen/logrus v1.3.0
 	github.com/stretchr/testify v1.3.0 // indirect
