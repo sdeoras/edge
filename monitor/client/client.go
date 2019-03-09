@@ -145,7 +145,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	jwtRequestor := jwt.NewRequestor(os.Getenv("JWT_SECRET_KEY"))
+	jwtRequestor := jwt.NewManager(os.Getenv("JWT_SECRET_KEY"))
 
 	req, err := jwtRequestor.Request(http.MethodPost, "https://"+os.Getenv("GOOGLE_GCF_DOMAIN")+
 		"/"+ProjectName+"/"+NameInfer, nil, b)

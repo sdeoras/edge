@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/sdeoras/jwt"
@@ -12,7 +13,7 @@ import (
 )
 
 func checkHealth(services ...string) (map[string]string, error) {
-	jwtRequestor := jwt.NewRequestor(os.Getenv("JWT_SECRET_KEY"))
+	jwtRequestor := jwt.NewManager(os.Getenv("JWT_SECRET_KEY"))
 	out := make(map[string]string)
 
 	for _, service := range services {
@@ -25,8 +26,11 @@ func checkHealth(services ...string) (map[string]string, error) {
 		}
 
 		req, err := jwtRequestor.Request(http.MethodPost,
-			"https://"+os.Getenv("GOOGLE_GCF_DOMAIN")+
-				"/"+ProjectName+"/health", nil, b)
+			"https://"+filepath.Join(
+				os.Getenv("GOOGLE_GCF_DOMAIN"),
+				ProjectName,
+				"health",
+			), nil, b)
 
 		client := &http.Client{}
 		resp, err := client.Do(req)
