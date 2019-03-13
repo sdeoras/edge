@@ -147,7 +147,7 @@ func main() {
 
 	jwtRequestor := jwt.NewManager(os.Getenv("JWT_SECRET_KEY"))
 
-	req, err := jwtRequestor.Request(http.MethodPost, "https://"+os.Getenv("GOOGLE_GCF_DOMAIN")+
+	req, err := jwtRequestor.NewHTTPRequest(http.MethodPost, "https://"+os.Getenv("GOOGLE_GCF_DOMAIN")+
 		"/"+ProjectName+"/"+NameInfer, nil, b)
 
 	client := &http.Client{}
@@ -197,7 +197,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	req, err = jwtRequestor.Request(http.MethodPost, "https://"+os.Getenv("GOOGLE_GCF_DOMAIN")+
+	req, err = jwtRequestor.NewHTTPRequest(http.MethodPost, "https://"+os.Getenv("GOOGLE_GCF_DOMAIN")+
 		"/"+ProjectName+"/"+NameEmail, nil, b)
 	req.Method = http.MethodPost
 

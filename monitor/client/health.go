@@ -2,15 +2,13 @@ package main
 
 import (
 	"github.com/sdeoras/health"
-	"github.com/sdeoras/jwt"
 	"net/http"
 	"os"
 	"path/filepath"
 )
 
 func checkHealth(services ...string) (map[string]string, error) {
-	jwtManager := jwt.NewManager(os.Getenv("JWT_SECRET_KEY"))
-	healthProvider := health.NewProvider(health.OutputProto, jwtManager, nil)
+	healthProvider := health.NewProvider(health.OutputProto)
 
 	out := make(map[string]string)
 
