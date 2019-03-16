@@ -14,10 +14,12 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"github.com/sirupsen/logrus"
+	"time"
+
 	"github.com/golang/protobuf/proto"
 	"github.com/sdeoras/api"
 	"github.com/sdeoras/jwt"
+	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 )
@@ -145,9 +147,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	jwtRequestor := jwt.NewManager(os.Getenv("JWT_SECRET_KEY"))
+	jwtManager := jwt.NewManager(os.Getenv("JWT_SECRET_KEY"),
+		jwt.SetLifeSpan(time.Second))
 
-	req, err := jwtRequestor.NewHTTPRequest(http.MethodPost, "https://"+os.Getenv("GOOGLE_GCF_DOMAIN")+
+	req, err := jwtManager.NewHTTPRequest(http.MethodPost, "https://"+os.Getenv("GOOGLE_GCF_DOMAIN")+
 		"/"+ProjectName+"/"+NameInfer, nil, b)
 
 	client := &http.Client{}
@@ -188,7 +191,7 @@ func main() {
 		ToName:    os.Getenv("EMAIL_TO_NAME"),
 		ToEmail:   os.Getenv("EMAIL_TO_EMAIL"),
 		Subject:   fmt.Sprintf("%s result is %s", modelName, response.Outputs[0].Label),
-		Body:      []byte(fmt.Sprintf("<strong>%s result is %s</strong>",
+		Body: []byte(fmt.Sprintf("<strong>%s result is %s</strong>",
 			modelName, response.Outputs[0].Label)),
 	}
 
@@ -197,7 +200,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	req, err = jwtRequestor.NewHTTPRequest(http.MethodPost, "https://"+os.Getenv("GOOGLE_GCF_DOMAIN")+
+	req, err = jwtManager.NewHTTPRequest(http.MethodPost, "https://"+os.Getenv("GOOGLE_GCF_DOMAIN")+
 		"/"+ProjectName+"/"+NameEmail, nil, b)
 	req.Method = http.MethodPost
 

@@ -3,10 +3,11 @@ package main
 import (
 	"context"
 	"flag"
-	"github.com/sdeoras/api"
 	"log"
 	"net"
 	"os/exec"
+
+	"github.com/sdeoras/api"
 	"google.golang.org/grpc"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/reflection"

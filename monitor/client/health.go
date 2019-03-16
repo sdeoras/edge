@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/sdeoras/health"
 	"net/http"
 	"os"
 	"path/filepath"
+
+	"github.com/sdeoras/health"
 )
 
 func checkHealth(services ...string) (map[string]string, error) {
