@@ -17,7 +17,7 @@ import (
 	"time"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/sdeoras/api"
+	"github.com/sdeoras/api/pb"
 	"github.com/sdeoras/jwt"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
@@ -92,9 +92,9 @@ func main() {
 		return
 	}
 
-	c := api.NewMonitorClient(conn)
+	c := pb.NewMonitorClient(conn)
 
-	stream, err := c.Query(context.Background(), &api.Empty{})
+	stream, err := c.Query(context.Background(), &pb.Empty{})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -134,9 +134,9 @@ func main() {
 		return
 	}
 
-	request := new(api.InferImageRequest)
-	request.Images = make([]*api.Image, 1)
-	request.Images[0] = new(api.Image)
+	request := new(pb.InferImageRequest)
+	request.Images = make([]*pb.Image, 1)
+	request.Images[0] = new(pb.Image)
 	request.Images[0].Name = modelName
 	request.Images[0].Data = bb.Bytes()
 	request.ModelName = modelName
@@ -169,7 +169,7 @@ func main() {
 		log.Fatalf("%s:%s. Mesg:%s", "expected status 200 OK, got", resp.Status, string(b))
 	}
 
-	response := new(api.InferImageResponse)
+	response := new(pb.InferImageResponse)
 	if err := proto.Unmarshal(b, response); err != nil {
 		log.Fatal(err)
 	}
@@ -185,7 +185,7 @@ func main() {
 		return
 	}
 
-	sendRequest := &api.EmailRequest{
+	sendRequest := &pb.EmailRequest{
 		FromName:  os.Getenv("EMAIL_FROM_NAME"),
 		FromEmail: os.Getenv("EMAIL_FROM_EMAIL"),
 		ToName:    os.Getenv("EMAIL_TO_NAME"),
@@ -220,7 +220,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	sendResponse := new(api.EmailResponse)
+	sendResponse := new(pb.EmailResponse)
 	if err := proto.Unmarshal(b, sendResponse); err != nil {
 		log.Fatal(err)
 	}
